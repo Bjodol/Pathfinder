@@ -7,7 +7,7 @@ console.log("Importing spells...");
 csv()
   .fromStream(
     request.get(
-      "https://docs.google.com/spreadsheets/d/1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI/export?format=csv&id=1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI&gid=838383682"
+      "https://docs.google.com/spreadsheets/d/0AhwDI9kFz9SddG5GNlY5bGNoS2VKVC11YXhMLTlDLUE/export?format=csv&id=1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI&gid=492323396"
     )
   )
   .transf((jsonObj, csvRow, index) => {
