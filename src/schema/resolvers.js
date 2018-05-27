@@ -7,34 +7,28 @@ console.log("Importing spells...");
 csv()
   .fromStream(
     request.get(
-      "https://docs.google.com/spreadsheets/d/0AhwDI9kFz9SddG5GNlY5bGNoS2VKVC11YXhMLTlDLUE/export?format=csv&id=1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI&gid=492323396"
+      "https://docs.google.com/spreadsheets/d/0AhwDI9kFz9SddG5GNlY5bGNoS2VKVC11YXhMLTlDLUE/export?format=csv"
     )
   )
-  .transf((jsonObj, csvRow, index) => {
-    Object.keys(jsonObj).forEach(key => {
-      if (jsonObj[key] == "NULL") {
-        jsonObj[key] = null;
+  .subscribe(json => {
+    Object.keys(json).forEach(key => {
+      if (json[key] == "NULL") {
+        json[key] = null;
       }
       if (key === "wiz") {
-        jsonObj["wizard"] = jsonObj[key];
-        delete jsonObj[key];
+        json["wizard"] = json[key];
+        delete json[key];
       } else if (key === "sor") {
-        jsonObj["sorcerer"] = jsonObj[key];
-        delete jsonObj[key];
+        json["sorcerer"] = json[key];
+        delete json[key];
       }
     });
+    spells.push(json);
   })
-  .on("json", jsonObj => {
-    spells.push(jsonObj);
-  })
-  .on("done", error => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log(`${spells.length} spells imported!`);
-      console.log("");
-    }
-  });
+  .then(error => {
+    console.log(`${spells.length} spells imported!`);
+    console.log("");
+  }).catch(e => console.error(e));
 
 module.exports = {
   Query: {
